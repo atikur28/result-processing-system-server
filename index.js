@@ -59,25 +59,6 @@ async function run() {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
-    //User Delete
-    app.delete('/users/:id',async(req,res)=>{
-      const id = req.params.id;
-      const query = { _id: new ObjectId(id) }
-      const result = await usersCollection.deleteOne(query);
-      res.send(result)
-    })
-    //user make admin
-    app.patch('/users/admin/:id',async(req,res)=>{
-      const id = req.params.id;
-      const filter = {_id: new ObjectId(id)};
-      const updatedDoc = {
-        $set:{
-          role:'admin'
-        }
-      }
-      const result = await usersCollection.updateOne(filter,updatedDoc)
-      res.send(result)
-    })
 
     app.get("/users/admin/:email", verifyToken, async (req, res) => {
       const email = req.params.email;
@@ -117,6 +98,27 @@ async function run() {
       const result = await usersCollection.insertOne(user);
       res.send(result);
     });
+
+    //User Delete
+    app.delete('/users/:id',async(req,res)=>{
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await usersCollection.deleteOne(query);
+      res.send(result)
+    })
+    
+    //user make admin
+    app.patch('/users/admin/:id',async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updatedDoc = {
+        $set:{
+          role:'admin'
+        }
+      }
+      const result = await usersCollection.updateOne(filter,updatedDoc)
+      res.send(result)
+    })
 
     
 
