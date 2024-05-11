@@ -151,6 +151,12 @@ async function run() {
       res.send(result);
     });
 
+    // results
+    app.get("/results", async (req, res) => {
+      const result = await resultsCollection.find().toArray();
+      res.send(result);
+    });
+
     // students result post from teacher to database
     app.post("/results", verifyToken, async (req, res) => {
       const resultInfo = req.body;
