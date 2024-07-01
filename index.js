@@ -157,6 +157,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/results/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await resultsCollection.findOne(query);
+      res.send(result);
+    });
+
     // students result post from teacher to database
     app.post("/results", verifyToken, async (req, res) => {
       const resultInfo = req.body;
