@@ -164,6 +164,39 @@ async function run() {
       res.send(result);
     });
 
+    //updated Results
+    app.patch("/results/:id", async (req, res) => {
+      const item = req.body;
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id) };
+    
+      console.log('Request Body:', item);
+      console.log('Request ID:', id);
+      
+      const updatedDoc = {
+      $set:{
+        name:item.name,
+        fatherName:item.fatherName,
+        motherName:item.motherName,
+        birthDate: item.birthDate,
+        rollNo:item.rollNo,
+        registrationNo:item.registrationNo,
+        teacherEmail: item.teacherEmail,
+        department:item.department,
+        semester:item.semester,
+        session:item.session,
+        studentType:item.studentType,
+        institute:item.institute,
+        subjects:item.subjects,
+      }
+    }
+
+      const result = await resultsCollection.updateOne(filter,updatedDoc)
+      res.send(result)
+    });
+    
+
+
     // students result post from teacher to database
     app.post("/results", verifyToken, async (req, res) => {
       const resultInfo = req.body;
